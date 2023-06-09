@@ -1,0 +1,100 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<div class="card card-body">
+  <h2 class="card-title fw-semibold">Compound List</h2>
+  <br>
+    {% if user.is_authenticated %}
+    <form method="POST" action="{% url 'download-csv-list' %}">
+      {% csrf_token %}
+      {% if compound_list %}
+      <table class="table table-hover expandable-table table-borderless" id="data_table" style="width:100%, text-align: center;">
+        <thead class="table-success">
+          <tr>
+            <th class="text-center"><input type="checkbox" id="select-all-checkbox"></th>
+            <th class="text-center">Compound ID</th>
+            <th class="text-center">Local name</th>
+            <th class="text-center">Compound libary name</th>
+            <th class="text-center">Compound origin</th>
+            <th class="text-center">Date added</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for compound in compound_list %}
+          <tr>
+            <td class="text-center"><input type="checkbox" name="selected_compounds" value="{{ compound.id }}"></td>
+            <td class="text-center"><a href="{{ compound.get_absolute_url }}">{{ compound.compound_id }}</a></td>
+            <td class="text-center">{{ compound.local_name }}</td>
+            <td class="text-center">{{ compound.compound_library_name }}</td>
+            <td class="text-center">{{ compound.compound_origin }}</td>
+            <td class="text-center">{{ compound.date_added }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      {% else %}
+      <p>There are no compounds in the library.</p>
+      {% endif %}
+      <button type="submit" id="download-csv-button" class="btn btn-success" style="display: none;"><i class="bi bi-box-arrow-down"></i><em>Download selections</em></button>
+    </form>
+<script>
+  const selectAllCheckbox = document.getElementById('select-all-checkbox');
+  const compoundCheckboxes = document.querySelectorAll('input[name="selected_compounds"]');
+  const downloadCsvButton = document.getElementById('download-csv-button');
+
+  selectAllCheckbox.addEventListener('change', (event) => {
+    for (const checkbox of compoundCheckboxes) {
+      checkbox.checked = event.target.checked;
+      updateDownloadButtonVisibility();
+    }
+  });
+
+  for (const checkbox of compoundCheckboxes) {
+    checkbox.addEventListener('change', () => {
+      updateDownloadButtonVisibility();
+    });
+  }
+
+  function updateDownloadButtonVisibility() {
+    const numSelected = document.querySelectorAll('input[name="selected_compounds"]:checked').length;
+    downloadCsvButton.style.display = numSelected > 0 ? 'block' : 'none';
+  }
+</script>
+{% else %}
+{% if compound_list %}
+<table class="table table-bordered" id="data_table">
+  <thead class="table-success">
+    <tr>
+      <th>Compound ID</th>
+      <th>Local name</th>
+      <th>Compound libary name</th>
+      <th>Compound origin</th>
+      <th>Date added</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for compound in compound_list %}
+    <tr>
+      <td><a href="{{ compound.get_absolute_url }}">{{ compound.compound_id }}</a></td>
+      <td>{{ compound.local_name }}</td>
+      <td>{{ compound.compound_library_name }}</td>
+      <td>{{ compound.compound_origin }}</td>
+      <td>{{ compound.date_added }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+{% else %}
+<p>There are no compounds in the library.</p>
+{% endif %}
+{% endif %}
+</div>
+{% endblock %}
+</div>
+</div>
+</div>
+</div>
+

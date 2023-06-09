@@ -1,0 +1,89 @@
+{% extends "base_generic.html" %}
+{% block content %}
+<div class="container-fluid">
+
+  
+    <div class="container-fluid p-30">
+        <div class="row">
+            <div class="col-md-12 main-datatable shadow">
+                <div class="card_body rounded">
+                    <div class="p-3">
+                        <h3 class="card-title">Manage Compounds</h3>
+                        <hr>
+                    </div>
+                    <div class="row d-flex">
+                        <div class="col-sm-4 createSegment"> 
+                         <a class="btn dim_button create_new mt-1 mb-3 " href="{% url 'add-compound' %}"><i class="bi bi-plus-lg"></i> Add Compound</a>
+                        </div>
+                        
+                    </div>
+                    <form method="POST" action="{% url 'delete-compounds-list' %}">
+                        {% csrf_token %}
+                        {% if compounds %}
+                        <div class="overflow-x">
+                            <table style="width:100%;" id="data_table" class="table cust-datatable dataTable no-footer">
+                                <thead>
+                                    <tr>
+                                        <th style="max-width:70px;"><input class="form-check-input me-1"  type="checkbox" id="select-all-checkbox"></th>
+                                        <th style="min-width:150px;">Compound ID </th>
+                                        <th style="min-width:150px;">Local name </th>
+                                        <th style="min-width:100px;">Compound libary name </th>
+                                        <th style="min-width:100px;">Compound origin </th>
+                                        <th style="min-width:150px;">Date added </th>
+                                        <th style="min-width:150px;">Activity </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for compound in compounds %}
+                                    <tr>
+                                        <td><input class="form-check-input me-1"  type="checkbox" name="selected_compounds" value="{{ compound.id }}"></td>
+                                        <td><a href="{{ compound.get_absolute_url }}">{{ compound.compound_id }}</a></td>
+                                        <td>{{compound.local_name}}</td>
+                                        <td>{{compound.compound_library_name}}</td>
+                                        <td>{{ compound.compound_origin }}</td>
+                                        <td>{{ compound.date_added }}</td>
+                                        <td>
+                                          <a class="btn btn-info btn-sm mr-2" href="{% url 'edit-compound' compound.id %}"><i class="bi bi-pencil-square"></i></a>
+                                          <a class="btn btn-danger btn-sm ml-2" href="{% url 'delete-compound' compound.id %}"><i class="bi bi-trash"></i></a>
+                                      </td>
+                                  </tr>
+                                  {% endfor %}
+
+                              </tbody>
+                          </table>
+                          <button type="submit" id="delete-button" class="btn btn-danger ms-3 mb-5 " style="display: none;"><i class="bi bi-trash"></i><em>Delete Selections</em></button>
+                          {% else %}
+                          <p>There are no compounds to the library.</p>
+                          {% endif %}
+                      </div>
+                  </form>
+                  <script>
+                      const selectAllCheckbox = document.getElementById('select-all-checkbox');
+                      const compoundCheckboxes = document.querySelectorAll('input[name="selected_compounds"]');
+                      const deleteButton = document.getElementById('delete-button');
+
+                      selectAllCheckbox.addEventListener('change', (event) => {
+                        for (const checkbox of compoundCheckboxes) {
+                          checkbox.checked = event.target.checked;
+                          updateDownloadButtonVisibility();
+                      }
+                  });
+
+                      for (const checkbox of compoundCheckboxes) {
+                        checkbox.addEventListener('change', () => {
+                          updateDownloadButtonVisibility();
+                      });
+                    }
+
+                    function updateDownloadButtonVisibility() {
+                        const numSelected = document.querySelectorAll('input[name="selected_compounds"]:checked').length;
+                        deleteButton.style.display = numSelected > 0 ? 'block' : 'none';
+                    } </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+

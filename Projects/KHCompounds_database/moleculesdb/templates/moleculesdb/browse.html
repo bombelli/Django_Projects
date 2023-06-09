@@ -1,0 +1,97 @@
+{% extends "base_generic.html" %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/static/js/ChemDoodleWeb.css" />
+
+<script type="text/javascript" src="/static/js/ChemDoodleWeb-libs.js"></script>
+<script type="text/javascript" src="/static/js/ChemDoodleWeb.js"></script>
+{% if mollist.has_previous %}
+
+{% else %}
+<div class="alert-box">
+<div class="row">
+<strong>Number of molecules: {{ofmols}}</strong>
+</div>
+</div>
+{% endif %}
+
+{% for mol in mollist %}
+
+<div id="mol{{mol.id}}" class="row">
+    <fieldset>
+        <legend><a href="/molecule/{{mol.id}}"><h3><i class="icon-beaker"></i> {{mol.compound_id}}</h3></a></legend>
+        <div class=row>
+        <div class="large-2 columns">
+            <a href="/molecule/{{mol.id}}">
+            <script>
+            var viewACS = new ChemDoodle.ViewerCanvas('{{mol.id}}', 150, 150);
+            viewACS.specs.bonds_width_2D = .6;
+            viewACS.specs.bonds_saturationWidth_2D = .18;
+            viewACS.specs.bonds_hashSpacing_2D = 2.5;
+            viewACS.specs.atoms_font_size_2D = 10;
+            viewACS.specs.atoms_font_families_2D = ['Helvetica', 'Arial', 'sans-serif'];
+            viewACS.specs.atoms_displayTerminalCarbonLabels_2D = true;
+            var caffeineMolFile = '{{mol.molfile}}';
+            var caffeine = ChemDoodle.readMOL(caffeineMolFile);
+            caffeine.scaleToAverageBondLength(14.4);
+            viewACS.loadMolecule(caffeine);
+            </script>
+            </a>
+        </div>
+        <div class="container-md-3">
+        <h1>Search Results</h1>
+
+          <table class="table table-bordered" id="data_table" style="text-align: center;">
+            <thead class="table-success">
+              <tr>
+                <th>Compound ID</th>
+                <th>Local name</th>
+                <th>Compound libary name</th>
+                <th>Compound origin</th>
+                <th>Date added</th>
+              </tr>
+            </thead>
+            <!--Data from backend-->
+            {% for compound in data %}
+              <tr>
+                <td><a href="{{ compound.get_absolute_url }}">{{ compound.compound_id }}</a></td>
+                <td>{{compound.local_name}}</td>
+                <td>{{compound.compound_library_name}}</td>
+                <td>{{ compound.compound_origin }}</td>
+                <td>{{ compound.date_added }}</td>
+              </tr>
+            {% endfor %}
+          </table>
+        </div>
+
+        </div>
+    </fieldset>
+</div>
+{% endfor %}
+    <div class=row>
+    <div class="pagination">
+    <ul class="pagination">
+        {% if mollist.has_previous %}
+            <li class="arrow"><a href="{{currentpath}}page={{ mollist.previous_page_number }}">&laquo;</a></li>
+        {% else %}
+            <li class="arrow unavailable"><a href="">&laquo;</a></li>
+        {% endif %}
+        {% for pagen in mollist.paginator.page_range %}
+            {% ifequal currpage pagen %}
+            <li class="current"><a href="{{currentpath}}page={{pagen}}">{{pagen}}</a></li>
+            {% else %}
+            <li><a href="{{currentpath}}page={{pagen}}">{{pagen}}</a></li>
+            {% endifequal %}
+        {% endfor %}
+        {% if mollist.has_next %}
+            <li class="arrow"><a href="{{currentpath}}page={{ mollist.next_page_number }}">&raquo;</a></li>
+        {% else %}
+            <li class="arrow unavailable"><a href="">&raquo;</a></li>
+        {% endif %}
+        
+    </ul>
+    </div>
+    </div>
+
+</div>
+
+{% endblock %}

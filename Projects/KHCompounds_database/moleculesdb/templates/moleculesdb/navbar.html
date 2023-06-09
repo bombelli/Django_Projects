@@ -1,0 +1,49 @@
+<nav class="nav navbar navbar-expand-lg navbar-light bg-light" style="height: 70px;">
+  <div class="container-fluid d-flex justify-content-center">
+
+    <button class="navbar-toggler toggle-sidebar-btn" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
+        </li>
+      </ul>
+
+      <div>
+      <form class="d-flex flex-wrap justify-content-center" method="GET" action="{% url 'search-results' %}">
+        {% csrf_token %}
+        <div class="input-group">
+          <input class="form-control" type="search" size="40" placeholder="Search Compounds..." aria-label="Search" name="query">
+          <button class="btn btn-outline-secondary" type="submit">Search</button>
+        </div>
+      </form>
+      
+    </div>
+    <div class="nav-item">
+      <a class="nav-link" href="{% url 'search-new' %}">Advanced Search</a>
+    </div>
+
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'add-compound' %}">Add Compound</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'manage-compounds' %}">Manage</a>
+        </li>
+        <li class="nav-item">
+          <a class="btn btn-default btn-warning" href="{% url 'user-logout' %}">Logout</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="btn btn-default btn-warning" href="{% url 'user-login' %}"><i class="fa fa-sign-in"></i> Login</a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+

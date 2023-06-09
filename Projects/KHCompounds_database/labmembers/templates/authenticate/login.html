@@ -1,0 +1,45 @@
+{% extends "base_generic.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-4">
+        <div class="card mt-5">
+            <!--autologout (5)-->
+            <div class="card-body">
+                <div class="card-title py-3">
+                  <h4>Login to your  account</h4>
+                </div>
+                <form method="POST">
+                    {% csrf_token %}
+                    {% for message in messages %}
+                    <div class="message text-center alert alert-info {{ message.tags }}">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+
+                    <div class="form-group">
+                      <input class="form-control form-control-sm" class="ms-1 border border-2" type="text" id="username" name="username" placeholder="username">
+                    </div>
+                    <br>
+
+                    <div class="form-group">
+                      <input class="form-control form-control-sm" type="password" id="password" name="password" placeholder="Password">
+                    </div>
+
+                    <div class="mt-4" >
+                    <input class="btn btn-block btn-success submit-btn" type="submit" value="Login">
+                    <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? Contact Admin</p>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+
+
+
+{% endblock %}
+

@@ -1,0 +1,8 @@
+psql -Upostgres -- login
+
+\du+ -- list available users
+
+ grant all on database locallibrary to admin;--- Grant all permissions to a user
+
+ create user django_postgres with encrypted password 'password';  -- create a user
+

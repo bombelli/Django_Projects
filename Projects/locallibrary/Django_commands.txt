@@ -1,0 +1,41 @@
+mkvirtualenv my_django_environment
+
+pip install django~=4.0
+
+python manage.py runserver
+
+mkdir django_projects
+
+cd django_projects
+
+django-admin startproject locallibrary
+
+cd locallibrary
+
+python manage.py startapp catalog
+
+python3 manage.py makemigrations
+python3 manage.py migrate
+
+
+
+19154360
+77-04-40
+
+Models:
+
+No need to talk to the database directly
+Just define the model object and django will do the rest
+
+When designing your models, it makes sense to have separate models for every "object" (a group of related information). In this case, the obvious objects are books, book instances, and authors.
+
+You might also want to use models to represent selection-list options (e.g. like a drop down list of choices), rather than hard coding the choices into the website itself 
+
+Once we've decided on our models and field, we need to think about the relationships. Django allows you to define relationships that are one to one (OneToOneField), one to many (ForeignKey) and many to many (ManyToManyField).
+
+Meta Data:
+For ordering queries
+ordering = ['title', '-pubdate']  the books would be sorted alphabetically by title, from A-Z, and then by publication date inside each title, from newest to oldest. As shown above, you can prefix the field name with a minus symbol (-) to reverse the sorting order.
+
+
+What you won't have is any Book Instances, because these are not created from Books (although you can create a Book from a BookInstance — this is the nature of the ForeignKey field)

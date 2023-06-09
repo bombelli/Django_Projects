@@ -1,0 +1,32 @@
+{% extends "base_generic.html" %}
+
+
+
+{% block sidebar %}
+    <!-- Empty block, no sidebar content -->
+{% endblock %}
+
+{% block content %}
+<div class="container aligns-items-center justify-content-center mt-5 ">
+  <h1>Hoffmann Database</h1>
+
+  <form class="d-flex flex-wrap justify-content-center" method="GET" action="{% url 'search-results' %}">
+    {% csrf_token %}
+    <div class="input-group">
+      <input class="form-control" type="search" size="40" placeholder="Search Compounds..." aria-label="Search" name="query">
+      <button class="btn btn-outline-secondary" type="submit">Search</button>
+    </div>
+  </form>
+
+  
+  <p>The library has {{ num_compounds }} compounds </p>
+  </div>
+
+
+
+{% block footer %}
+    <!-- Footer content for other pages here -->
+{% endblock %}
+
+  {{ redirect_to_login_immediately }} <!--(3)-->
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<div class="row my-4">
+    <div class="col-md-6 offset-md-3">
+        <div class="border p-3 bg-white">
+            <h3>Delete Compound</h3>
+            <hr>
+            <form method="POST">
+                <div class="alert alert-danger">
+                    <h4>Are you sure, you want to delete {{ compound }}?</h4>
+                </div>
+                {% csrf_token %}
+                {{ form }}
+                <a class="btn btn-secondary btn-sm" href="{% url 'manage-compounds' %}">Cancel</a>
+                <input class="btn btn-danger btn-sm" type="submit" value="Confirm">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

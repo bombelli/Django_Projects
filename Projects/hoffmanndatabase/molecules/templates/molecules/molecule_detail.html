@@ -1,0 +1,351 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<br/>
+<div class="container-md">
+  <div class="card mb-5">
+    <div class="card-body">
+
+      <h3 class="card-title fw-semibold" >Compound Report Card [<span class="text-success">{{ molecule.compound_id }}</span>]</h3>
+
+      <hr style="height:1px;background-color:black;border:none;" noshade />
+
+      <br/>
+
+      
+
+      <div class="accordion" >
+        <div class="accordion-item" >
+          <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              <strong class="text-info"> COMPOUND BASIC ANNOTATION </strong>
+            </button>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" >
+            <div class="accordion-body">
+
+              <div class="row">
+                <div class="col-lg-4 card card-body border shadow d-flex justify-content-center align-items-center" style="height: 200px; width: 100px;">
+                  {% if molecule.compound_structure %} 
+                  <img src="{{ molecule.compound_structure.url }}" class="img-fluid" style="max-height: 100%; max-width: 100%;">
+                  {% endif %}
+                </div>
+
+                <div class="col-lg-8 ms-5">
+                  <table class="table table-borderless">
+                    <tr>
+
+                      <td><p><strong><em>Compound ID: &nbsp</em></strong> {{ molecule.compound_id }}</p></td>
+                      <td></td>
+                      <td><strong><em>Local name : &nbsp</em></strong> {{ molecule.local_name }}</td>
+                      <td></td>
+                      <td><strong><em>Commercial name: &nbsp</em></strong> {{ molecule.commercial_name}}</td>
+
+                    </tr>
+                    <tr>
+                      
+                      <td><strong><p><em>Library name : &nbsp</em></strong> {{ molecule.compound_library_name }}</p></td>
+                      <td></td>
+                      <td><strong><em>Origin : &nbsp</em></strong> {{ molecule.compound_origin }}</td>
+                      <td></td>
+                      <td><strong><em>CAS # : &nbsp</em></strong> {{ molecule.cas_number}}</td>
+                    </tr>
+                    <tr>
+                      
+                      <td><p><strong><em>Compound type : &nbsp</em></strong> {{ molecule.compound_type }}</p></td>
+                      <td></td>
+                      <td><strong><em>Contact person : &nbsp</em></strong> {{ molecule.au_contact_person_name }}</td>
+                      <td></td>
+                      <td><strong><em>Email : &nbsp</em></strong> {{ molecule.au_contact_person_email}}</td>
+                    </tr>
+                    <tr>
+                      
+                      <td><strong><em>Date added : &nbsp</em></strong> {{ molecule.date_added}}</td>
+                      
+                    </tr>
+                  </table>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <br>
+
+      <div class="accordion" >
+        <div class="accordion-item" >
+          <h2 class="accordion-header" id="headingTwo">
+            <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseOne">
+              <strong class="text-info"> COMPOUND PROPERTIES</strong>
+            </button>
+          </h2>
+          <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" >
+            <div class="accordion-body">
+              <table class="table table-borderless" style="word-wrap: break-word;">
+                    <tr>
+
+                      <td><p><strong><em>Molecular formula: &nbsp</em></strong> {{ molecule.molecular_formula }}</p></td>
+                      <td></td>
+                      <td><strong><em>Molecular weight: &nbsp</em></strong> {{ molecule.molecular_weight }}</td>
+                      <td></td>
+                      <td style="word-wrap: break-word;"><strong><em>Smiles: &nbsp</em></strong> {{ molecule.smiles}}</td>
+
+                    </tr>
+                    <tr>
+                      
+                      <td><strong><p><em>Inchl key : &nbsp</em></strong> {{ molecule.inchl_key}}</p></td>
+                      <td></td>
+                      <td style="word-wrap: break-word;"><p><strong><em>Salt version : &nbsp</em></strong> {{ molecule.compound_salt_version }}</p></td>
+                      <td></td>
+                      <td><p><strong><em>Logp: &nbsp</em></strong> {{ molecule.logp  }}</p></td>
+                     
+                    </tr>
+                    <tr>
+                      <td><strong><em>Chembl id : &nbsp</em></strong> {{ molecule.chembl_id }}</td>
+                      <td></td>
+                      <td><strong><em>Pubchem cid : &nbsp</em></strong> {{ molecule.pubchem_cid}}</td>
+                      <td></td>
+                      <td><p><strong><em>Iupac name : &nbsp</em></strong> {{ molecule.iupac_name }}</p></td>
+                      
+                    </tr>
+                    <tr>
+                      
+                      <td><strong><em>Commercially available: &nbsp</em></strong> {{ molecule.commercially_available}}</td>
+                      <td></td>
+                      <td><strong><em>Product code: &nbsp</em></strong> {{ molecule.product_code}}</td>
+                    </tr>
+                  </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <br>
+
+      <div class="accordion" >
+        <div class="accordion-item" >
+          <h2 class="accordion-header" id="headingThree">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseOne">
+              <strong class="text-info"> STORAGE INFORMATION </strong>
+            </button>
+          </h2>
+          <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingThree" >
+            <div class="accordion-body">
+              <table class="table table-borderless" style="word-wrap: break-word;">
+                    <tr>
+
+                      <td><p><strong><em>Storage type: &nbsp</em></strong> {{ molecule.storage_type}}</p></td>
+                      <td></td>
+                      <td><strong><em>Storage format: &nbsp</em></strong> {{ molecule.storage_format }}</td>
+
+                    </tr>
+                    <tr>
+                      
+                      <td><strong><p><em>Quantity received : &nbsp</em></strong> {{ molecule.quantity_received}}</p></td>
+                      <td></td>
+                      <td><p><strong><em>Weight (in mg) : &nbsp</em></strong> {{ molecule.weight }}</p></td>
+                      <td></td>
+                      <td><p><strong><em>Volume (in μL): &nbsp</em></strong> {{ molecule.volume  }}</p></td>
+                     
+                    </tr>
+                    <tr>
+                      <td><strong><em>Storage temperature (Room) : &nbsp</em></strong> {{ molecule.room_temperature }}</td>
+                      <td></td>
+                      <td><strong><em>Freezer name : &nbsp</em></strong> {{ molecule.freezer_name}}</td>
+                      <td></td>
+                      <td><p><strong><em>Freezer temperature : &nbsp</em></strong> {{ molecule.freezer_temperature }}</p></td>
+                      
+                    </tr>
+                    <tr>
+                      
+                      <td><strong><em>Shelf / drawer number: &nbsp</em></strong> {{ molecule.shelf_or_drawer_number}}</td>
+                      <td></td>
+                      <td><strong><em>Box number: &nbsp</em></strong> {{ molecule.box_number}}</td>
+                    </tr>
+                  </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <br>
+
+      <div class="accordion" >
+        <div class="accordion-item" >
+          <h2 class="accordion-header" id="headingFour">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseOne">
+              <strong class="text-info"> BIOLOGICAL ANNOTATION </strong>
+            </button>
+          </h2>
+          <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingFour" >
+            <div class="accordion-body">
+                <table class="table table-borderless" style="word-wrap: break-word;">
+                    <tr>
+
+                      <td><p><strong><em>Assay date: &nbsp</em></strong> {{ molecule.assay_date}}</p></td>
+                      <td></td>
+                      <td><strong><em>Previous assay date: &nbsp</em></strong> {{ molecule.previous_assay_date }}</td>
+
+                    </tr>
+                    <tr>
+                      
+                      <td><strong><p><em>Affects schistosomula : &nbsp</em></strong> {{ molecule.affects_schistosomula}}</p></td>
+                      <td></td>
+                      <td><p><strong><em>Schistosomula Activity(EC50) : &nbsp</em></strong> {{ molecule.schistosomula_activity }}</p></td>
+                     
+                    </tr>
+                    <tr>
+                      <td><p><strong><em>Affects juvenile worms : &nbsp</em></strong> {{ molecule.affects_juvenile_worms }}</p></td>
+                      <td></td>
+                      <td><strong><em>Juvenile worms Activity(EC50) : &nbsp</em></strong> {{ molecule.juvenile_worms_activity}}</td>
+                      
+                    </tr>
+                    <tr>
+                      
+                      <td><strong><em>Affects adult worms: &nbsp</em></strong> {{ molecule.affects_adult_worms}}</td>
+                      <td></td>
+                      <td><strong><em>Adult worms Activity(EC50): &nbsp</em></strong> {{ molecule.adult_worms_activity}}</td>
+                      <td></td>
+                      <td><strong><em>Adultworm screen conducted by: &nbsp</em></strong> {{ molecule.adultworm_screen_conducted_by}}</td>
+                    </tr>
+                  </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <br>
+
+      <div class="accordion">
+        <div class="accordion-item" >
+          <h2 class="accordion-header" id="headingFive">
+            <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseOne">
+              <strong class="text-info"> COMMENTS </strong>
+            </button>
+          </h2>
+          <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingFive" >
+            <div class="accordion-body">
+              <table class="table table-borderless">
+                    <tr>
+
+                      <td><p>{{ molecule.comments}}</p></td>
+
+                    </tr>
+                    
+                  </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+
+{% endblock %}
+
+
+<!--
+
+<br/>  
+  <div class="container-md">
+    <h2>Compound Report Card</h2>
+
+    <hr style="height:1px;background-color:black;border:none;" noshade />
+
+    <br/>
+
+    <div class="card border-dark mb-3" style="height: 36rem;">
+        <div class="card-header">
+          <strong>NAME ANNOTATION</strong>
+        </div>
+        <div class="card-body">
+          <p><strong>Compound ID:</strong> {{ compound.compound_id }}</p> 
+          <p><strong>Local name :</strong> {{ compound.local_name }}</p> 
+          <p><strong>Commercial name:</strong> {{ compound.commercial_name}}</p>
+          <p><strong>Smiles:</strong> {{compound.smiles}}</p>
+          <p><strong>Compound type:</strong> {{ compound.compound_type}}</p>
+          <p><strong>Date added:</strong> {{ compound.date_added}}</p>
+          <p><strong>Compound structure:</strong>
+            {%if compound.compound_structure %} 
+              <img src="{{ compound.compound_structure.url}}" width="200" height="250">
+            {% endif %}
+          </p>
+    </div>
+</div>
+
+<div class="card card-block">
+    <div class="card-header">
+      <strong>COMPOUND PROPERTIES</strong>
+    </div>
+    <div class="card-body">
+      <p><strong>Compound ID:</strong> {{ compound.compound_id }}</p> 
+      <p><strong>Local name :</strong> {{ compound.local_name }}</p> 
+      <p><strong>Commercial name:</strong> {{ compound.commercial_name}}</p>
+      <p><strong>Smiles:</strong> {{compound.smiles}}</p>
+      <p><strong>Compound type:</strong> {{ compound.compound_type}}</p>
+      <p><strong>Date added:</strong> {{ compound.date_added}}</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="card card-block">
+    <div class="card-header">
+      <strong>STORAGE INFORMATION</strong>
+    </div>
+    <div class="card-body">
+      <p><strong>Compound ID:</strong> {{ compound.compound_id }}</p> 
+      <p><strong>Local name :</strong> {{ compound.local_name }}</p> 
+      <p><strong>Commercial name:</strong> {{ compound.commercial_name}}</p>
+      <p><strong>Smiles:</strong> {{compound.smiles}}</p>
+      <p><strong>Compound type:</strong> {{ compound.compound_type}}</p>
+      <p><strong>Date added:</strong> {{ compound.date_added}}</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="card border-dark mb-3">
+    <div class="card-header">
+      <strong>BIOLOGICAL ANNOTATION</strong>
+    </div>
+    <div class="card-body">
+      <p><strong>Compound ID:</strong> {{ compound.compound_id }}</p> 
+      <p><strong>Local name :</strong> {{ compound.local_name }}</p> 
+      <p><strong>Commercial name:</strong> {{ compound.commercial_name}}</p>
+      <p><strong>Smiles:</strong> {{compound.smiles}}</p>
+      <p><strong>Compound type:</strong> {{ compound.compound_type}}</p>
+      <p><strong>Date added:</strong> {{ compound.date_added}}</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="card border-dark mb-3">
+    <div class="card-header">
+      <strong>COMMENTS</strong>
+    </div>
+    <div class="card-body">
+      <p><strong>Compound ID:</strong> {{ compound.compound_id }}</p> 
+      <p><strong>Local name :</strong> {{ compound.local_name }}</p> 
+      <p><strong>Commercial name:</strong> {{ compound.commercial_name}}</p>
+      <p><strong>Smiles:</strong> {{compound.smiles}}</p>
+      <p><strong>Compound type:</strong> {{ compound.compound_type}}</p>
+      <p><strong>Date added:</strong> {{ compound.date_added}}</p>
+    </div>
+  </div>
+
+</div>
+
+
+
+-->
+
+

@@ -1,0 +1,85 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<div class="container-md-3">
+  <h1>Substructure Search Results</h1>
+  {% if user.is_authenticated %}
+    <form method="POST" action="{% url 'download-csv' %}">
+      {% csrf_token %}
+
+      <table class="table table-bordered" id="data_table" style="text-align: center;">
+        <thead class="table-success">
+          <tr>
+            <th><input type="checkbox" id="select-all-checkbox"></th>
+            <th>Compound ID</th>
+            <th>Local name</th>
+            <th>Compound libary name</th>
+            <th>Compound origin</th>
+            <th>Date added</th>
+          </tr>
+        </thead>
+        <!--Data from backend-->
+        {% for compound in compounds %}
+          <tr>
+            <td><input type="checkbox"  name="selected_compounds" value="{{ compound.id }}"></td>
+            <td><a href="{{ compound.get_absolute_url }}">{{ compound.compound_id }}</a></td>
+            <td>{{compound.local_name}}</td>
+            <td>{{compound.compound_library_name}}</td>
+            <td>{{ compound.compound_origin }}</td>
+            <td>{{ compound.date_added }}</td>
+          </tr>
+        {% endfor %}
+      </table>
+
+      <button type="submit" id="download-csv-button" class="btn btn-success" style="display: none;"><i class="bi bi-box-arrow-down"></i><em>Download selections</em></button>
+
+    </form>
+
+    <script>
+      const selectAllCheckbox = document.getElementById('select-all-checkbox');
+      const compoundCheckboxes = document.querySelectorAll('input[name="selected_compounds"]');
+      const downloadCsvButton = document.getElementById('download-csv-button');
+
+      selectAllCheckbox.addEventListener('change', (event) => {
+        for (const checkbox of compoundCheckboxes) {
+          checkbox.checked = event.target.checked;
+          updateDownloadButtonVisibility();
+        }
+      });
+
+        for (const checkbox of compoundCheckboxes) {
+        checkbox.addEventListener('change', () => {
+          updateDownloadButtonVisibility();
+        });
+      }
+
+      function updateDownloadButtonVisibility() {
+        const numSelected = document.querySelectorAll('input[name="selected_compounds"]:checked').length;
+        downloadCsvButton.style.display = numSelected > 0 ? 'block' : 'none';
+      }
+    </script>
+  {% else %}
+    <table class="table table-bordered" id="data_table" style="text-align: center;">
+        <thead class="table-success">
+          <tr>
+            <th>Compound ID</th>
+            <th>Local name</th>
+            <th>Compound libary name</th>
+            <th>Compound origin</th>
+            <th>Date added</th>
+          </tr>
+        </thead>
+        <!--Data from backend-->
+        {% for compound in compounds %}
+          <tr>
+            <td><a href="{{ compound.get_absolute_url }}">{{ compound.compound_id }}</a></td>
+            <td>{{compound.local_name}}</td>
+            <td>{{compound.compound_library_name}}</td>
+            <td>{{ compound.compound_origin }}</td>
+            <td>{{ compound.date_added }}</td>
+          </tr>
+        {% endfor %}
+      </table>
+  {% endif %}
+</div>
+{% endblock %}
